@@ -28,10 +28,10 @@ local CYAN    = 36
 -- local WHITE   = 37
 
 local config = {
-	{'[ERROR]  ', RED},
-	{'[WARNING]', YELLOW},
-	{'[INFO]   ', GREEN},
-	{'[DEBUG]  ', CYAN},
+	{' ERROR   ', RED},
+	{' WARNING ', YELLOW},
+	{' INFO    ', GREEN},
+	{' DEBUG   ', CYAN},
 }
 
 do -- parse config
@@ -71,9 +71,9 @@ function Logger:log(level, msg, ...)
 
 	local d = date(self._dateTime)
 	if self._file then
-		writeSync(self._file, -1, format('%s | %s | %s\n', d, tag[1], msg))
+		writeSync(self._file, -1, format('%s  %s %s\n', d, tag[1], msg))
 	end
-	stdout:write(format('%s | %s | %s\n', d, tag[3], msg))
+	stdout:write(format('%s  %s %s\n', d, tag[3], msg))
 
 	return msg
 
