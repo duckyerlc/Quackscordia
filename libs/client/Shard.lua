@@ -118,7 +118,7 @@ function Shard:handlePayload(payload)
 
 		self._seq = s
 		if not ignore[t] then
-			EventHandler[t](d, client, self)
+			wrap(EventHandler[t])(d, client, self)
 		end
 
 	elseif op == HEARTBEAT then
