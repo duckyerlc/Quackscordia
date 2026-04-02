@@ -177,7 +177,12 @@ function API:request(method, endpoint, payload, query, files, reason)
 
 	mutex:lock()
 	local data, err, delay = self:commit(method, url, req, payload, 0)
-	mutex:unlockAfter(delay)
+	if delay > 0 then
+        mutex:unlockAfter(delay)
+    else
+        mutex:unlock()
+    end
+    
 	if data then
 		return data
 	else

@@ -199,6 +199,7 @@ function Shard:heartbeat()
 		self._client:emit('shardZombied', self._id)
 		return self:disconnect(true)
 	end
+	
 	self._heartbeat_acknowledged = false
 	self._sw:reset()
 	local success, err = self:_send(HEARTBEAT, self._seq or json.null)
