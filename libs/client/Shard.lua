@@ -154,6 +154,7 @@ function Shard:handlePayload(payload)
 
 	elseif op == HEARTBEAT_ACK then
 
+		self._heartbeat_acknowledged = true
 		client:emit('heartbeatAcknowledged', self._id, self._sw.milliseconds)
 
 	elseif op then
@@ -193,6 +194,12 @@ function Shard:identifyWait()
 end
 
 function Shard:heartbeat()
+	if self._heartbeat_acknowledged == false then
+		self:warning('Connection zombied, reconnecting...')
+		self._client:emit('shardZombied', self._id)
+		return self:disconnect(true)
+	end
+	self._heartbeat_acknowledged = false
 	self._sw:reset()
 	local success, err = self:_send(HEARTBEAT, self._seq or json.null)
 	if not success then
