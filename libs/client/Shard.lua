@@ -176,6 +176,7 @@ function Shard:startHeartbeat(interval)
 	if self._heartbeat then
 		clearInterval(self._heartbeat)
 	end
+	self._heartbeat_acknowledged = nil
 	self._heartbeat = setInterval(interval, loop, self)
 end
 
